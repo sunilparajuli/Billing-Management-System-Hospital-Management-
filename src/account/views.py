@@ -35,6 +35,8 @@ from .models import Doctor, BloodGroup, Visit, VisitType, Account, PhoneOTP, Pas
 from datetime import datetime as dt, timedelta
 from django.core.paginator import Paginator
 from django.contrib import messages
+from products.models import UserVariationQuantityHistory, VariationBatch
+from products.serializers import UserVariationQuantityHistorySerializer
 # from datetime import datetime
 
 User = get_user_model()
@@ -105,7 +107,7 @@ def login_view(request):
 	
 
 	# print(form)
-	return render(request, "account/login.html", context)
+	return render(request, "account/login.html", context, status=401) #not authorized code
 
 
 def account_view(request):
@@ -750,8 +752,7 @@ class SaveUpdateFirebaseToken(APIView):
 			})
 
 
-from products.models import UserVariationQuantityHistory
-from products.serializers import UserVariationQuantityHistorySerializer
+
 class GetUserJarAndCreditAPIView(APIView):
 	serializer_class = UserVariationQuantityHistorySerializer
 	def post(self, request, *args, **kwargs):
@@ -1005,17 +1006,30 @@ class VisitAPIView(APIView):
 		fk_doctor_user_id =  request.data.get('fk_doctor_user_id')
 		remarks =  request.data.get('remarks')
 		appointment_date =  request.data.get('appointmentDate')
+		if not appointment_date:
+			appointment_date = datetime.datetime.now()
 		fk_bloodgroup_id = request.data.get('fk_bloodgroup_id')
 		emergency_number = request.data.get('emergency_number')	
 		visit_type = request.data.get('visit_type')
+		fk_patient_type_id = request.data.get('fk_patient_type_id')
 		visit_id  = dt.now().strftime('%Y%m%d%H%M%S')
-		if fk_customer_user_id and fk_doctor_user_id:
+		intial_prod_batch = VariationBatch.objects.filter(is_initial=True)		
+		if fk_customer_user_id:
 			visit = Visit.objects.create(fk_customer_user_id=fk_customer_user_id,
 										 fk_doctor_user_id=fk_doctor_user_id,
 										 appointment_date=appointment_date,
 										 fk_visit_id=visit_type,
-										 visit_id= visit_id,										 
+										 visit_id= visit_id,
+										 fk_user_type_id = fk_patient_type_id,										 
 										 remarks=remarks)
+		if intial_prod_batch:
+			cart = Cart()
+			cart.user_id = fk_customer_user_id
+			cart.fk_visit_id = visit.id
+			cart.save()
+			for prod in intial_prod_batch:
+				CartItem.objects.create(cart_id=cart.id, fk_variation_batch_id=prod.id,fk_counter_id=request.session['counter'], ordered_price=prod.price, orginal_price=prod.price, quantity=1)		
+
 			data = {
 				'success': 'Created',
 				'id' : visit.id,
@@ -1023,7 +1037,7 @@ class VisitAPIView(APIView):
 			}
 			return Response(data, status=200)
 		else:
-			return Response('failed', status=400)
+			return Response('failed Patient Was not Selected', status=400)
 
 	def delete(self, request):
 		visit_id = request.data.get('visit_id')

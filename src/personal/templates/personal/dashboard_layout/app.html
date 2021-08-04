@@ -7,7 +7,7 @@
         <meta name="description" content="Hospital Pharmacy Management System">
         <meta name="author" content="Inlinetech HMS">
         <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="https://inlinetech.com.np/images/logo.png">
         <!-- App title -->
         <title>HMS | INLINETECH</title>
         <!-- CSRF Token -->
@@ -22,6 +22,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vue-toasted/1.1.28/vue-toasted.min.css" integrity="sha512-P9tgFEUBcyvFHEXSRGLQB/SvGxnMfJCZGy4SBp+JIFgs1BSoYfUkadkZri9Rwkeh8Vg0lGo72X99o31wetRGCw==" crossorigin="anonymous" />
         <script src="https://unpkg.com/vuejs-datepicker"></script>
         <script src="https://unpkg.com/vuejs-datepicker/dist/locale/translations/fr.js"></script>
+        <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
+        <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
         <!-- Table datatable css -->
         <link href="https://coderthemes.com/zircos/layouts/vertical/assets/libs/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
         <link href="https://coderthemes.com/zircos/layouts/vertical/assets/libs/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
@@ -260,10 +262,7 @@
                             <!-- Navigation Menu-->
                             <ul class="navigation-menu in">
                                 <li class="has-submenu active">
-                                    <a href="#" class="active"> <i class="mdi mdi-view-dashboard"></i>Dashboard</a>
-                                    <ul class="submenu in">
-                                        <li class="active"><a href="/dashboard" class="active">Dashboard 1</a></li>
-                                    </ul>
+                                    <a href="/dashboard/" class="active"> <i class="mdi mdi-view-dashboard"></i>Dashboard</a>                                 
                                 </li>
                                 <li class="has-submenu last-elements">
                                     <a href="#"> <i class="mdi mdi-home-map-marker"></i>Catalogue
@@ -287,7 +286,7 @@
                                     <a href="#"> <i class="mdi mdi-flip-horizontal"></i>Sales
                                     </a>
                                     <ul class="submenu">
-                                        <li><a href="#">Sales Report</a></li>
+                                        <li><a href="/sales/">Sales Report</a></li>
                                         <li><a href="#">Sales Return Report</a></li>
                                     </ul>
                                 </li>
@@ -575,11 +574,12 @@
                             <div class="col-md-12">
                                 <div class="page-title-box">
                                     <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
+                                        
+                                        <!-- <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Zircos</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard </a></li>
                                             <li class="breadcrumb-item active">Dashboard</li>
-                                        </ol>
+                                        </ol> -->
                                     </div>
                                     <h4 class="page-title">{% block page_title %} | hms{% endblock %}</h4>
                                 </div>
@@ -643,7 +643,8 @@
             Vue.use(Toasted)
             Vue.component('v-select', VueSelect.VueSelect);
             Vue.use(VueLoading);
-            Vue.component('loading', VueLoading)
+            Vue.component('loading', VueLoading);
+            Vue.component('multiselect', window.VueMultiselect.default);
             Vue.prototype.$loader = '';
             Window.prototype.$ToastSuccess = function (thisRef, msg) { 
                 thisRef.$toasted.show(msg, { 
