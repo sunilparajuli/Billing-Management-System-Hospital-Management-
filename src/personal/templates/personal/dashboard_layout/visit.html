@@ -9,8 +9,7 @@
         <div class="col-md-12">
             <div class="card-box">
                 <h4 class="header-title">Visit </h4>
-                <p class="sub-header">
-                </p>    
+                <p class="sub-header"></p>    
                 <div class="row1">                  
                         <div class="form-horizontal">
                             <div class="form-group row">
@@ -18,14 +17,13 @@
                                     <label> Select Patient</label>
                                 </div>
                                 
-                                <div class="col-sm-9 col-md-6">
+                                <div class="col-sm-12 col-md-4">
+                                    <multiselect v-model="fk_customer_user_id" :options="patients" label="fullname" :searchable="true" :close-on-select="true" :show-labels="true" placeholder="Select Patient"></multiselect>
                                     <!-- <select class="form-control" v-model="fk_customer_user_id">
                                         <option  v-for="(patient, index) in patients" v-bind:value="patient.id">[[ patient.firstname ]] [[patient.lastname]] [[patient.mobile]]</option>
                                     </select> -->
-                                
                                     <!-- <v-select label="fullname" :options="patients"  v-model="fk_customer_user_id"></v-select> -->
-                                    <label class="typo__label">Patient</label>
-                                        <multiselect v-model="fk_customer_user_id" :options="patients" label="fullname" :searchable="true" :close-on-select="true" :show-labels="true" placeholder="Select Patient"></multiselect>
+                                    <!-- <label class="typo__label">Patient</label> -->
                                     <!-- <pre class="language-json"><code>[[ fullname  ]]</code></pre> -->
                                 </div>
                                 <div class="col-sm-3 col-md-3" >
@@ -34,28 +32,28 @@
                             </div>
     
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label"> Reffer Doctor</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 col-md-3 control-label"> Refferal Doctor</label>
+                                <div class="col-sm-12 col-md-4">
                                     <select class="form-control" v-model="fk_doctor_user_id">
                                         <option  v-for="(doctor, index) in doctors.results" v-bind:value="doctor.id">[[ doctor.firstname ]] [[doctor.lastname]] [[doctor.mobile]]</option>
                                     </select>
                                 </div>
         
-                                <div class="form-group row">
-                                    <label class="col-sm-2 control-label"> Reffer Doctor</label>
-                                    <div class="col-sm-10">
+                                <!-- <div class="form-group row">
+                                    <label class="col-sm-3 col-md-3 control-label"> Reffer Doctor</label>
+                                    <div class="col-sm-12 col-md-4">
                                         <select class="form-control" v-model="fk_doctor_user_id">
                                             <option  v-for="(doctor, index) in doctors.results" v-bind:value="doctor.id">[[ doctor.firstname ]] [[doctor.lastname]] [[doctor.mobile]]</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="row">
-                                <label class="col-sm-2 control-label"> Patient Type</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-12 col-md-3 control-label"> Patient Type</label>
+                                <div class="col-sm-12 col-md-4">
                                     <div class="form-group">                                   
-                                        <select class="form-control" v-model="fk_patient_type_id">                                           
+                                        <select class="form-control" v-model="fk_patient_type_id">                      
                                             {% for ut in user_types %}
                                                 <option value="{{ut.id}}">{{ut.title}}</option>
                                             {% endfor %}                                            
@@ -64,37 +62,33 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-4 control-label">Appointment Date</label>
-                                
-                                    <div class="input-group col-sm-8">                                       
+                                <label class="col-sm-12 col-md-3 control-label">Appointment Date</label>
+                                    <div class="input-group col-sm-12 col-md-4">                                       
                                         <vuejs-datepicker :format="customAppointmentFormatter" v-model="customerForm.appointmentDate"></vuejs-datepicker>    
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-md-2 control-label"> Remarks</label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12 col-md-3 control-label"> Remarks</label>
+                                    <div class="col-sm-12 col-md-4">
                                         <!-- <input type="text" v-model="remarks" class="form-control" value="" placeholder="Remarks"> -->
                                         <textarea class="form-control" rows="5" v-model="remarks"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-10">
+                                    <label class="col-sm-12 col-md-3 control-label"></label>
+                                    <div class="col-sm-12 col-md-4">
                                         <button class="btn btn-info" @click="saveVisit">Add</button>
                                     </div>
                                 </div>
                             </div>
-    
-                           
                         </div>
-                   <br />
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-12">
                             <center><button class="btn btn-info" @click="saveVisit">Add</button></center>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- end row -->
             </div>
