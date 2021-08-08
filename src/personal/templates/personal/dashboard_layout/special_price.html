@@ -14,41 +14,43 @@
     <div class="section-body">
         <div class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table m-0 table table-bordered table-responsive" style="overflow-y: auto;">
-                        <thead class="bg-teal text-white">
-                            <tr>
-                                <th>Item/Service</th>                                
-                                <th>Patient Type</th>
-                                <th>Selling Price</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                
-                                <td style="max-height: 500px;"><v-select  label="fk_variation_name" :options="products" attach  v-model="specialPrice.fk_variation_batch_id"></v-select></td>
-                                <td>
-                                    <select class="form-control" v-model = "specialPrice.fk_user_type_id">                                        
-                                        <option value="">
-                                            Select Type                                          
+                <div class="card-box">   
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group ">
+                                <label>Item/Service</label>
+                                <v-select  label="fk_variation_name" :options="products" attach  v-model="specialPrice.fk_variation_batch_id"></v-select>
+                            </div>
+                        </div>
+    
+                        <div class="col-md-2">
+                            <div class="form-group ">
+                                <label>Selling Price</label>
+                                <input class="form-control form-white" placeholder="0" type="text" v-model="specialPrice.price" />
+                            </div>
+                        </div>
+                        
+    
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Patient Type</label>
+                                <select class="form-control" v-model = "specialPrice.fk_user_type_id">                             
+                                    <option value="">Select Type</option>
+                                    {% for usertype in usertypes %}
+                                        <option value="{{usertype.id}}">
+                                            {{usertype.title}}
                                         </option>
-                                        {% for usertype in usertypes %}
-                                            <option value="{{usertype.id}}">
-                                                {{usertype.title}}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </td>
-                                <td>
-                                    <input class="form-control form-white" placeholder="YYYY-MM-DD" type="text" v-model="specialPrice.price" /></td>
-                                   
-                                </td>
-                                
-                            <td><button type="button" class="btn btn-danger waves-effect waves-light save-category" @click="addSpecialPrice">Save</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2" style="padding-top:31px;">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-danger waves-effect waves-light save-category" @click="addSpecialPrice">Save</button>
+                            </div>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>
