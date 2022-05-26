@@ -1,1 +1,1 @@
-Django E-commerce full rest-api
+Django Hospital Management System
